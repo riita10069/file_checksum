@@ -14,7 +14,6 @@ func NewFileAdapter(filename string) *FileAdapter {
 	return &FileAdapter{filename: filename}
 }
 
-
 func (a *FileAdapter) fileScan(file *os.File) error {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
@@ -48,7 +47,7 @@ func (a *FileAdapter) writelines(file *os.File) error {
 	return nil
 }
 
-func (a *FileAdapter)WriteByLine() error {
+func (a *FileAdapter) WriteByLine() error {
 	file, err := os.Create(a.filename)
 	if err != nil {
 		return err

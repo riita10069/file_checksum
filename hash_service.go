@@ -3,7 +3,7 @@ package main
 import "sync"
 
 type (
-	HashService struct {}
+	HashService  struct{}
 	IHashService interface {
 		SHA256([]string) []string
 	}
@@ -33,4 +33,3 @@ func (*HashService) SHA256(lines []string) []string {
 	allWg.Wait()
 	return hashedLines
 }
-

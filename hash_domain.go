@@ -9,11 +9,9 @@ type HashDomain struct {
 	message string
 }
 
-
 func NewHashDomain(message string) *HashDomain {
 	return &HashDomain{message: message}
 }
-
 
 func (d *HashDomain) getBinaryBySHA256() []byte {
 	r := sha256.Sum256([]byte(d.message))
@@ -23,4 +21,3 @@ func (d *HashDomain) getBinaryBySHA256() []byte {
 func (d *HashDomain) HexDumpBySHA256() string {
 	return hex.EncodeToString(d.getBinaryBySHA256())
 }
-
