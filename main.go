@@ -9,8 +9,12 @@ type (
 	}
 )
 
+func newHandler(hashService IHashService) *handler {
+	return &handler{HashService: hashService}
+}
+
 func main() {
-	err := handler{HashService: NewHashService()}.handler()
+	err := newHandler(NewHashService()).handler()
 	if err != nil {
 		panic(err.Error())
 	}

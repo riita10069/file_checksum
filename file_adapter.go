@@ -40,7 +40,7 @@ func (a *FileAdapter) ReadByLine() error {
 
 func (a *FileAdapter) writelines(file *os.File) error {
 	for _, line := range a.lines {
-		_, err := file.WriteString(line)
+		_, err := file.WriteString(line + "\n")
 		if err != nil {
 			return err
 		}

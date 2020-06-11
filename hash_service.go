@@ -14,16 +14,23 @@ func NewHashService() *HashService {
 }
 
 func (*HashService) SHA256(lines []string) []string {
-	var wg = sync.WaitGroup{}
+	var allWg = sync.WaitGroup{}
+	var smallWg = sync.WaitGroup{}
+
+	allWg.Add(len(lines))
 	hashedLines := make([]string, len(lines))
 	for i, v := range lines {
-		wg.Add(1)
+		smallWg.Add(1)
 		go func() {
-			hashedLines[i] = NewHashDomain(v).HexDumpBySHA256()
-			wg.Done()
+			num := i
+			text := v
+			smallWg.Done()
+			hashedLines[num] = NewHashDomain(text).HexDumpBySHA256()
+			allWg.Done()
 		}()
+		smallWg.Wait()
 	}
-	wg.Wait()
+	allWg.Wait()
 	return hashedLines
 }
 
