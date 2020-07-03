@@ -15,12 +15,16 @@ func NewHashService() *HashService {
 
 func (*HashService) SHA256(lines []string) []string {
 	var wg = sync.WaitGroup{}
+	var mutex = &sync.Mutex{}
 
 	wg.Add(len(lines))
 	hashedLines := make([]string, len(lines))
 	for i, v := range lines {
 		go func(i int, v string) {
-			hashedLines[i] = NewHashDomain(v).HexDumpBySHA256()
+			sha256 := NewHashDomain(v).HexDumpBySHA256()
+			mutex.Lock()
+			hashedLines[i] = sha256
+			mutex.Unlock()
 			wg.Done()
 		}(i, v)
 	}
